@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+}
+.Home {
+    height: 140vh;
+    width: 100vw;
+    background-color: #F5F7F8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.Header {
+    background-color: #31511E;
+    color:#F5F7F8;
+    padding-left: 2%;
+    height: 3vh;
+}
+
+.imageBackground {
+    height: 40vh;
+    background-image: url("hf.jpg");
+    background-size: cover;
+    opacity: 0.27;
+}
+
+.Content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5vh;
+    font-family: monospace;
+}
+
+.llmContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.ingList {
+    height: 50vh;
+    width: 45vw;
+    background-color: #FFFFFF;
+    border: 1px black solid;
+}
+
+.ingListTitle {
+    border-bottom: 1px solid black;
+    height: 10%;
+}
+
+.ingredients {
+    height: 70%;
+}
+
+.Total {
+    height: 10%;
+    border-top: 1px solid black;
+    justify-items: end;
+}
+
+
+.fastFood {
+    height: 50vh;
+    width: 40vw;
+    background-color: #FFFFFF;
+    border: 1px black solid;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.ffList {
+    border-right: 1px black solid;
+    width: 50%;
+    justify-items: center;
+}
+
+.homeade{ 
+    width: 50%;
+    justify-items: center;
+}
+
+.TextContent {
+    display: flex;
+    justify-content: center;
+}
+
+.SavedAnnouncement{
+    display: flex;
+    justify-content: center;
+    color: #EF0000;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.Footer {
+    background-color: #31511E;
+    color:#F5F7F8;
+    padding-left: 2%;
+    height: 3vh;
+}
