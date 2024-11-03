@@ -10,7 +10,7 @@ from wtforms.validators import DataRequired, Length
 
 from openai import OpenAI
 
-client = OpenAI(api_key="KEY HERE")
+client = OpenAI(api_key="LE KEY")
 
 app = Flask(__name__)
 foo = secrets.token_urlsafe(16)
@@ -22,7 +22,8 @@ bootstrap = Bootstrap5(app)
 csrf = CSRFProtect(app)
 
 class NameForm(FlaskForm):
-    item = StringField('Restaurant?', validators=[DataRequired(), Length(10, 40)])
+    resturant = StringField('Restaurant?', validators=[DataRequired(), Length(10, 40)])
+    item = StringField('Item?', validators=[DataRequired(), Length(5, 40)])
     submit = SubmitField('Submit')
 
 def getIngredients(item):
@@ -84,14 +85,18 @@ def index():
             # redirect the browser to another route and template
             return render_template("index2.html", form=form,\
                 ingredients=["chicken breast", "flour", "breadcrumbs","egg", "oil", "salt", "pepper"],\
-                prices=["1 dolla", "5 dolla", "2 dolla","0 cents", "a soul", "1 dolla", "a dolla"])
-    
+                prices=["1 dolla", "5 dolla", "2 dolla","0 cents", "a soul", "1 dolla", "a dolla"],\
+                homemade=["protein: 10g", "carbs: 100g", "fats: 5g", "vitamins: 1g", "minerals: 0g", "protein: 10g", "carbs: 100g", "fats: 5g", "vitamins: 1g", "minerals: 0g", "carbs: 100g", "fats: 5g", "vitamins: 1g", "minerals: 0g"],\
+                fastFood=["protein: 10g", "carbs: 100g", "fats: 5g", "vitamins: 1g", "minerals: 0g"],\
+                homeadePrice = 5, res = 10 - 5, user_Ingredient = True, Recipe = False,
+                recipe="1. Begin by bringing a large pot of salted water to a boil. Once boiling, add the spaghetti and cook according to the package instructions until al dente. Drain and set aside.\n\n2.t 6-7 minutes on each side, or until the chicken is cooked through and no longer pink in the center. Remove from the skillet and let it rest before slicing.\n\n4. In the same skillet, add the marinara sauce and heat it over medium-low heat, stirring occasionally. If you like, you can add some herbs or spices to enhance the flavor.\n\n5. Once the sauce is heated through, add the drained spaghetti to the skillet and toss it in the sauce until well coated.\n\n6. Slice the cooked chicken and place it on top of the spaghetti and marinara sauce.\n\n7. Serve hot, optionally garnished with grated Parmesan cheese and fresh basil if desired. Enjoy!")
+
     '''            prices=getPriceList,\
                 homemadeList=getNutrientsHomemadeList, \
                 fastFoodList=getNutrientsFastFoodList'''
         #else:
             #message = "That actor is not in our database."
-    return render_template("index2.html", form=form, ingredients=[])
+    return render_template("index2.html", form=form, ingredients=[], user_Ingredient = False, Recipe = False)
 
 if __name__ == '__main__':
     app.run()

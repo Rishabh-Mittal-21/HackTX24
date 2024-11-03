@@ -12,7 +12,7 @@
         }
 
         .Home {
-            height: 140vh;
+            height: 130vh;
             width: 100vw;
             background-color: #F5F7F8;
             margin: 0;
@@ -25,27 +25,50 @@
             background-color: #31511E;
             color: #F5F7F8;
             height: 3vh;
-        }
-
-        .formPosition1 {
-            position: absolute;
-            top: 10vh;
-            left: 10vw;
-            width: 30vw;
-            height: 2vh;
-            background-color: #FFFFFF;
-            border: 1px black solid;
+            display: flex;
+            align-items: center;
+            padding-left: 3%;
         }
 
         .imageBackground {
-            height: 45vh;
-            background-image: url("static/hf.jpg");
-            background-size: cover;
-            opacity: 0.27;
-        }
+    height: 45vh;
+    background-image: url("static/hf.jpg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;  /* Ensure no overflow from pseudo-element */
+}
 
+/* Overlay with semi-transparent effect */
+.imageBackground::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);  /* Adjust transparency level */
+    z-index: 1;  /* Place overlay below form content */
+}
+
+/* Style for the form to keep it fully opaque and above the overlay */
+.formPosition1 {
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: black;
+    opacity: 1;
+    position: relative;  /* Keeps it above the overlay */
+    z-index: 2;  /* Places it above the overlay */
+}
         .Content {
-            height: 100vh;
+            height: 110vh;
             display: flex;
             flex-direction: column;
             margin-top: 5vh;
@@ -72,7 +95,7 @@
 
         .ingredients {
             height: 70%;
-            overflow-y: scroll;
+            overflow-y: auto;
         }
 
         .Total {
@@ -81,7 +104,7 @@
             justify-items: end;
         }
 
-        /* .NutriFood {
+        .NutriFood {
             height: 50vh;
             width: 40vw;
             background-color: #FFFFFF;
@@ -91,11 +114,12 @@
             justify-content: space-between;
         }
 
-        .ffList {
-            border-right: 1px black solid;
-            width: 50%;
+        .ffText,
+        .homeadeText {
+            border-bottom: 1px black solid;
+            width: 100%;
             justify-items: center;
-        } */
+        }
 
         .TextContent {
             display: flex;
@@ -126,19 +150,86 @@
             display: flex;
             justify-content: space-between;
         }
+        
+
+        .marginText{
+            margin-left: 5%;
+        }
+
+        .marginText2{
+            margin-right: 5%;
+        }
 
         .ffList,
         .homemade {
             width: 50%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            border-right: 1px black solid;
+            overflow-y: auto;
+            scrollbar-width: 1px;
         }
 
-        .homemade {
-            border-left: 1px black solid;
+        .ffList {
+            border-right: 1px solid black;
         }
+
+        .bottomText {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 30vh;
+        }
+
+        a {
+            color: black;
+            cursor: pointer;
+        }
+
+        .active {
+            color: black;
+        }
+
+        .toggle-link {
+            cursor: pointer;
+            color: black;
+            text-decoration: underline;
+            display: flex;
+            justify-content: center;
+        }
+
+    input[type="checkbox"] {
+        display: none;
+    }
+
+    /* Style the hidden text */
+    .toggle-content {
+        display: none; /* Hidden by default */
+        margin-top: 10px;
+        color: #333;
+        width: 50%;
+    }
+
+    input[type="checkbox"]:checked + label + .toggle-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .LinkContent {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .formLabel {
+        color: black;
+    }
+
+
     </style>
 </head>
 
@@ -149,75 +240,96 @@
         </div>
         <div class="imageBackground">
             <div class="formPosition1">
-                {{ render_form(form) }}
-            </div>
-            <div>
-                <p>Item</p>
-            </div>
-            <div>
-                Enter
+                <form method="POST" action="/">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        <label for="resturant" class="formLabel">Item</label>
+                        <input type="text" id="resturant" name="resturant" class="form-control" placeholder="resturant name" required>
+
+                        <label for="item" class="formLabel">Item</label>
+                        <input type="text" id="item" name="item" class="form-control" placeholder="Enter item name" required>
+
+
+                    <button type="submit">Submit</button>
+                </div>
+                </form>
+                <!--{{ render_form(form) }}-->
             </div>
         </div>
-        <div class="Content">
-            <div class="llmContent">
-                <div class="ingList">
-                    <div class="ingListTitle">
-                        <h2>Ingredient List</h2>
-                    </div>
-                    <div class="ingredients">
-                        <div class="ing">
+            <div class="Content">
+                <div class="llmContent">
+                    <div class="ingList">
+                        <div class="ingListTitle">
+                            <div class="marginText">
+                                <h2>Ingredient List</h2>
+                            </div>
+                        </div>
+                        <div class="ingredients">
+                            <div class="ing">
+
+                            </div>
+                            {% for i in range(ingredients|length) %}
+                            <div
+                                style="width: 100%; height: 10%; border-bottom: 1px black solid; display: flex; flex-direction: row;">
+                                <div style="width: 90%; height: 100%; border-bottom: 1px black solid">
+                                    {{ ingredients[i] }}
+                                </div>
+                                <div style="width: 10%; height: 100%; border-left: 1px black solid">
+                                    {{ prices[i] }}
+                                </div>
+                            </div>
+                            {% endfor %}
 
                         </div>
-                        {% for i in range(ingredients|length) %}
-                        <div
-                            style="width: 100%; height: 10%; border-bottom: 1px black solid; display: flex; flex-direction: row;">
-                            <div style="width: 90%; height: 100%; border-bottom: 1px black solid">
-                                {{ ingredients[i] }}
-                            </div>
-                            <div style="width: 10%; height: 100%; border-left: 1px black solid">
-                                {{ prices[i] }}
+                        <div class="Total">
+                            <div class = "marginText2">
+                                <h2>TOTAL: ${{ homeadePrice }}</h2>
                             </div>
                         </div>
-                        {% endfor %}
-
                     </div>
-                    <div class="Total">
-                        <h2>TOTAL: $xx</h2>
+                    <div class="NutriFood">
+                        <div class="ffList">
+                            <div class="ffText">
+                                <h2>Fast Food</h2>
+                            </div>
+                            {% for item in fastFood%}
+                            <div
+                                style="width: 100%; height: 10%; border-bottom: 1px black solid; display: flex; flex-direction: row;">
+                                <div style="width: 50%; height: 100%; border-bottom: 1px black solid">
+                                    {{ item }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="homemade">
+                            <div class="homeadeText">
+                                <h2>Homemade</h2>
+                            </div>
+                            {% for item in homemade %}
+                            <div
+                                style="width: 100%; height: 10%; border-bottom: 1px black solid; display: flex; flex-direction: row;">
+                                <div style="width: 50%; height: 100%; border-bottom: 1px black solid">
+                                    {{ item }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-                <div class="NutriFood">
-                    <div class="ffList">
-                        <h2>Fast Food</h2>
-                        {% for item in fastFood%}
-                        <div
-                            style="width: 100%; height: 10%; border-bottom: 1px black solid; display: flex; flex-direction: row;">
-                            <div style="width: 50%; height: 100%; border-bottom: 1px black solid">
-                                {{ item }}
-                            </div>
-                        </div>
-                        {% endfor %}
+                <div class = "bottomText">
+                    <div class="SavedAnnouncement">
+                        <h1><i>You Saved ${{ res }}</i></h1>
                     </div>
-                    <div class="homemade">
-                        <h2>Homemade</h2>
-                        {% for item in homemade %}
-                        <div
-                            style="width: 100%; height: 10%; border-bottom: 1px black solid; display: flex; flex-direction: row;">
-                            <div style="width: 50%; height: 100%; border-bottom: 1px black solid">
-                                {{ item }}
-                            </div>
+                    <div class="LinkContent">
+                        <input type="checkbox" id="toggle-checkbox">
+                        <label for="toggle-checkbox" class="toggle-link">Want to make this recipe?</label>
+                        <div class="toggle-content">
+                            {{ recipe }}
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
             </div>
-            <div class="SavedAnnouncement">
-                <h1><i>You Saved $xx</i></h1>
-            </div>
-            <div class="TextContent">
-                <p><u>Want to make this recipe?</u></p>
-            </div>
-        </div>
-        <div class="Footer"></div>
+    <div class="Footer"></div>
     </div>
 </body>
 
