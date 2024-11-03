@@ -227,6 +227,59 @@
 
     .formLabel {
         color: black;
+        margin-top: 6%;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 80%;
+
+    }
+
+    input:hover {
+        background-color: #f1f1f1;
+    }
+
+    input:focus{
+        border-color: #31511E;
+        box-shadow: 0px 4px 12px rgba(74, 144, 226, 0.3); 
+        background-color: #fff;
+    }
+
+    
+    input{
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 13px;
+        font-family: Arial, sans-serif;
+        color: #333;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        outline: none;
+        transition: all 0.3s ease;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        font-size: 14px;
+        font-weight: 00;
+        color: #555;
+        margin-bottom: 4px;
+    }
+
+    button {
+        padding: 10px 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+        background-color: #b3cba4;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
     }
 
 
@@ -243,14 +296,14 @@
                 <form method="POST" action="/">
                     {{ form.hidden_tag() }}
                     <div class="form-group">
-                        <label for="resturant" class="formLabel">Item</label>
-                        <input type="text" id="resturant" name="resturant" class="form-control" placeholder="resturant name" required>
+                        <label for="resturant" class="formLabel">Restaurant</label>
+                        <input type="text" id="resturant" name="resturant" class="form-control" placeholder="Enter a resturant name" required>
 
                         <label for="item" class="formLabel">Item</label>
-                        <input type="text" id="item" name="item" class="form-control" placeholder="Enter item name" required>
+                        <input type="text" id="item" name="item" class="form-control" placeholder="Enter an item name" required>
 
 
-                    <button type="submit">Submit</button>
+                    <button type="submit" class="formLabel">Submit</button>
                 </div>
                 </form>
                 <!--{{ render_form(form) }}-->
@@ -271,11 +324,15 @@
                             {% for i in range(ingredients|length) %}
                             <div
                                 style="width: 100%; height: 10%; border-bottom: 1px black solid; display: flex; flex-direction: row;">
-                                <div style="width: 90%; height: 100%; border-bottom: 1px black solid">
-                                    {{ ingredients[i] }}
+                                <div style="width: 90%; height: 100%; border-bottom: 1px black solid; display: flex; align-items: center;">
+                                    <div style="margin-left: 2%;">
+                                        {{ ingredients[i] }}
+                                    </div>
                                 </div>
-                                <div style="width: 10%; height: 100%; border-left: 1px black solid">
-                                    {{ prices[i] }}
+                                <div style="width: 10%; height: 100%; border-left: 1px black solid; display: flex; align-items: center">
+                                    <div style="margin-left: 2%;">
+                                        {{ prices[i] }}
+                                    </div>
                                 </div>
                             </div>
                             {% endfor %}
@@ -295,8 +352,10 @@
                             {% for item in fastFood%}
                             <div
                                 style="width: 100%; height: 10%; border-bottom: 1px black solid; display: flex; flex-direction: row;">
-                                <div style="width: 50%; height: 100%; border-bottom: 1px black solid">
-                                    {{ item }}
+                                <div style="width: 50%; height: 100%; border-bottom: 1px black solid; display: flex; align-items: center;">
+                                    <div style="margin-left: 2%;">
+                                        {{ item }}
+                                    </div>
                                 </div>
                             </div>
                             {% endfor %}
@@ -308,8 +367,10 @@
                             {% for item in homemade %}
                             <div
                                 style="width: 100%; height: 10%; border-bottom: 1px black solid; display: flex; flex-direction: row;">
-                                <div style="width: 50%; height: 100%; border-bottom: 1px black solid">
-                                    {{ item }}
+                                <div style="width: 50%; height: 100%; border-bottom: 1px black solid; display: flex; align-items: center;">
+                                    <div style="margin-left: 2%;">
+                                        {{ item }}
+                                    </div>
                                 </div>
                             </div>
                             {% endfor %}
@@ -317,9 +378,11 @@
                     </div>
                 </div>
                 <div class = "bottomText">
-                    <div class="SavedAnnouncement">
-                        <h1><i>You Saved ${{ res }}</i></h1>
-                    </div>
+                    {% if res  > 0 %}
+                        <div class="SavedAnnouncement">
+                            <h1><i>You Saved ${{ res }}</i></h1>
+                        </div>
+                    {% endif %}
                     <div class="LinkContent">
                         <input type="checkbox" id="toggle-checkbox">
                         <label for="toggle-checkbox" class="toggle-link">Want to make this recipe?</label>
