@@ -9,7 +9,7 @@ from wtforms.validators import DataRequired, Length
 
 from openai import OpenAI
 
-client = OpenAI("API_KEY")
+client = OpenAI()
 
 app = Flask(__name__)
 foo = secrets.token_urlsafe(16)
@@ -19,8 +19,8 @@ app.secret_key = foo
 csrf = CSRFProtect(app)
 
 class NameForm(FlaskForm):
-    resturant = StringField('Restaurant?', validators=[DataRequired(), Length(10, 40)])
-    item = StringField('Item?', validators=[DataRequired(), Length(5, 40)])
+    resturant = StringField('Restaurant?', validators=[DataRequired(), Length(2, 40)])
+    item = StringField('Item?', validators=[DataRequired(), Length(2, 40)])
     submit = SubmitField('Submit')
 
 def getIngredients(item):
@@ -198,7 +198,7 @@ def index():
                 prices=getPriceList,\
                 homemade=getNutrientsHomemadeList,\
                 fastFood=getNutrientsFastList,\
-                homeadePrice = total_sum, res = total_sum - getEstimatedPriceRes, user_Ingredient = True, Recipe = False,
+                homeadePrice = total_sum, res = round(total_sum - getEstimatedPriceRes, 2), user_Ingredient = True, Recipe = False,
                 recipe= getRecipe(form.item.data).content)
         #else:
             #message = "That actor is not in our database."
