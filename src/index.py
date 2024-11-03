@@ -9,7 +9,7 @@ from wtforms.validators import DataRequired, Length
 
 from openai import OpenAI
 
-client = OpenAI()
+client = OpenAI("API_KEY")
 
 app = Flask(__name__)
 foo = secrets.token_urlsafe(16)
