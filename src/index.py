@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for
 from openai import OpenAI
 import secrets
 import os
-from flask_bootstrap import Bootstrap5
 
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField
@@ -10,14 +9,12 @@ from wtforms.validators import DataRequired, Length
 
 from openai import OpenAI
 
-client = OpenAI("KEY")
+client = OpenAI()
 
 app = Flask(__name__)
 foo = secrets.token_urlsafe(16)
 app.secret_key = foo
 
-# Bootstrap-Flask requires this line
-bootstrap = Bootstrap5(app)
 # Flask-WTF requires this line
 csrf = CSRFProtect(app)
 
